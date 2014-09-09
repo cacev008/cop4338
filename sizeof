@@ -1,0 +1,19 @@
+#include <stdio.h>
+int main()
+{
+char c;
+unsigned char uc;
+short s;
+unsigned short us;
+int i;
+unsigned int ui;
+long l;
+unsigned long ul;
+long long ll;
+unsigned long long ull;
+flot f;
+double d;
+
+printf("char=%lu, uchar=%lu, CHAR_MIN=%+d, CHAR_MAX=%+d,\nshort=%lu, ushort=%lu,SHRT_MIN=%+d, SHRT_MAX=%+d\nint=%lu, uint=%lu, INT_MIN=%+d,INT_MAX=%+d,\nlong=%lu, ulong=%lu, LONG_MIN=+%ld, LONG_MAX=+%ld, sizeof(c), sizeof(uc), CHAR_MIN, CHAR_MAX, sizeof(s), sizeof(us), SHRT_MIN, SHRT_MAX, sizeof(i), sizeof(ui), INT_MIN, INT_MIN, sizeof(l), sizeof(ul), LONG_MIN, LONG_MAX, sizeof(ll), sizeof(ull), sizeof(f), sizeof(double));
+return 0;
+}
