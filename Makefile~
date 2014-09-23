@@ -7,7 +7,7 @@ hw1.o: hw1.c
 	gcc -c hw1.c -o hw1.o
 
 sizeof.o: sizeof.c
-	gcc -c sizeof.c -o sizeof.o
+	gcc -c mystdio.c -o mystdio.o
 
 clean:
 	rm -f hw1.o sizeof.o hw1 core *~
