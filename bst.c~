@@ -1,0 +1,145 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <getopt.h>
+
+struct bstNode
+{
+    char data[100];
+    struct bstNode* left;
+    struct bstNode* right;
+};
+
+struct bstNode* findmin(struct bstNode* root)
+{
+    while(root->left != NULL) root = root->left;
+    return root;
+}
+
+struct bstNode* newNode(char data[100])
+{
+    struct bstNode* nNode = (struct bstNode*)malloc(sizeof(struct bstNode*));
+    nNode->data[100] = data[100];
+    nNode->left = nNode->right = NULL;
+    return nNode;
+}
+
+struct bstNode* Insert(struct bstNode* root, char data)
+{
+    if (root == NULL)
+    {
+        root = newNode(data);
+    }
+    else if(data <= root -> data)
+    {
+        root->left = Insert(root->left,data);
+    }
+    else
+    {
+        root->right = Insert(root->right,data);
+    }
+    return root;
+}
+
+bool info(struct bstNode* root, char data)
+{
+    bool var=false;
+    if(root == NULL) return var;
+    else if(root->data == data)
+    {
+        var = true;
+        return true;
+    }
+    else if(data <= root->data) return info(root->left,data);
+    else return info(root->right,data);
+}
+
+void printFilename();
+char  *filename;
+
+int main(int argc, char *argv[]){
+
+    int opt;
+    int cflag = 0;
+    int oflag = 0;
+
+    while ((opt = getopt (argc, argv, "co")) != -1) {
+        switch (opt) {
+            case 'c':
+                cflag = 1;
+                printf("Option c On\n");
+                break;
+            case 'o':
+                oflag = 1;
+                printf("Option o on\n");
+                break;
+            default:
+                printf("Option not recognized\n");
+                break;
+        }
+
+        if (optind < argc) {
+            int i;
+            for (i = 0; i < argc; i++){
+                filename = argv[optind];
+            }
+        }
+    }
+    if(cflag == 1)
+    {
+        filename = fopen("stdin.txt", "rt");
+        char line[512];
+        struct bstNode *node = line;
+
+        char ** storage;
+        unsigned int storage_size = 20;
+        unsigned int storage_current = 0;
+
+        storage = malloc(sizeof(char*) * storage_size);
+
+        if (filename != NULL)
+            {
+                unsigned char block_size = 20;
+                unsigned char block_current = 0;
+
+                storage[storage_current] = malloc(sizeof(int) * block_size);
+
+                while(fgets(Insert(node,node), sizeof node, filename) != NULL)
+                    {
+                        char * tch = strtok (node, " ");
+                        while (tch != NULL)
+                        {
+                            storage[storage_current][block_current] = tch;
+                            tch = strtok(NULL, " ");
+
+                            if (storage[storage_current][block_current] == 0)
+                            {
+                                ++storage_current;
+                                break;
+                            }
+                            ++block_current;
+
+                            if (block_current >= block_size)
+                            {
+                                block_size *= 2;
+                                storage[storage_current] = realloc(storage[storage_current], sizeof(int) * block_size);
+                            }
+                        }
+                        if (storage_current >= storage_size)
+                        {
+                            storage_size *= 2;
+                            storage = realloc(storage, sizeof(int*) * storage_size);
+                        }
+                    }
+            }
+    }
+
+    if(oflag == 1 ){
+      printFilename();
+    }
+}
+
+void printFilename(){
+    printf("%s",filename);
+    printf("\n");
+}
